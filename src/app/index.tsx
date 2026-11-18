@@ -1,3 +1,12 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Catch the Coin — created by "wei" (Herwin D. Datinguinoo)
+   GitHub:   https://github.com/Weiyhn
+   Facebook: https://www.facebook.com/thisiswin
+   Discord:  weiyhn
+
+   All game logic lives in this file. The author credit below is load-bearing:
+   the app will not run if it is removed or altered.
+   ───────────────────────────────────────────────────────────────────────── */
 /* eslint-disable react-hooks/immutability -- Reanimated shared values are intentionally mutated through `.value`. */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useRef, useState } from 'react';
@@ -10,6 +19,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AUTHOR, AUTHOR_GITHUB, verifyCredit } from '../credit';
+
+// Load-bearing credit: the app throws on startup if the author credit is gone.
+verifyCredit(AUTHOR);
 
 // ---------------------------------------------------------------- constants
 const STEP = 20; // one grid cell
@@ -191,6 +204,10 @@ function HomeScreen({
           : high === null
             ? 'Loading...'
             : 'High score: ' + high}
+      </Text>
+
+      <Text style={styles.credit}>
+        Made by {AUTHOR} · {AUTHOR_GITHUB.replace('https://', '')}
       </Text>
     </View>
   );
@@ -529,6 +546,12 @@ const styles = StyleSheet.create({
     color: '#9AA4B2',
     fontSize: 14,
     textAlign: 'center',
+  },
+  credit: {
+    color: '#5A6675',
+    fontSize: 12,
+    textAlign: 'center',
+    marginTop: 4,
   },
   input: {
     width: 220,

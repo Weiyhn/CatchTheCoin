@@ -3,6 +3,7 @@
     "name": "CatchTheCoin",
     "slug": "CatchTheCoin",
     "version": "1.0.0",
+    "description": "Catch the Coin — a snake arcade game by wei (Herwin D. Datinguinoo) — https://github.com/Weiyhn",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "catchthecoin",

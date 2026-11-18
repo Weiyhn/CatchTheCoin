@@ -1,6 +1,7 @@
 {
   "name": "catchthecoin",
   "version": "1.0.0",
+  "author": "wei (Herwin D. Datinguinoo) — https://github.com/Weiyhn",
   "main": "expo-router/entry",
   "dependencies": {
     "@expo/ui": "~58.0.28",
