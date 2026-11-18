@@ -4,18 +4,19 @@
    Facebook: https://www.facebook.com/thisiswin
    Discord:  weiyhn
 
-   Root navigator. The author credit is load-bearing: the app will not run if
-   it is removed or altered.
+   Root navigator. The author credit is load-bearing: the app will not build or
+   run if it is removed or altered.
    ───────────────────────────────────────────────────────────────────────── */
 import { Stack } from 'expo-router';
 import { verifyCredit } from '../credit';
 
-// Load-bearing credit: the app throws on startup if the author credit is gone.
-verifyCredit();
+// Load-bearing credit. `CREDIT` is required below, so removing this call (or the
+// credit file) stops the app from building and from running.
+const CREDIT = verifyCredit();
 
 export default function RootLayout() {
-  // Second, independent check so the navigator cannot mount without the credit.
-  verifyCredit();
+  // The navigator cannot mount without a valid credit.
+  if (!CREDIT.ok) return null;
 
   return <Stack screenOptions={{ headerShown: false }} />;
 }

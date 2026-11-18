@@ -21,8 +21,9 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AUTHOR, AUTHOR_GITHUB, verifyCredit } from '../credit';
 
-// Load-bearing credit: the app throws on startup if the author credit is gone.
-verifyCredit();
+// Load-bearing credit. `CREDIT` is required further down, so removing this call
+// (or the credit file) stops the app from building and from running.
+const CREDIT = verifyCredit();
 
 // ---------------------------------------------------------------- constants
 const STEP = 20; // one grid cell
@@ -508,12 +509,11 @@ function GameScreen({ name, onHome }: { name: string; onHome: () => void }) {
 
 // ----------------------------------------------------------------- App
 export default function App() {
-  // Second, independent check: even if the module-level call above were removed,
-  // the app cannot draw without a valid credit.
-  verifyCredit();
-
   const [screen, setScreen] = useState<'home' | 'game'>('home');
   const [name, setName] = useState('');
+
+  // Second, independent gate: the app cannot draw without a valid credit.
+  if (!CREDIT.ok) return null;
 
   return (
     <SafeAreaView style={styles.safe}>

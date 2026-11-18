@@ -42,16 +42,24 @@ function seal(input: string): string {
   return h1.toString(36) + '.' + h2.toString(36);
 }
 
+export type CreditToken = { ok: boolean; seal: string };
+
 /**
- * Throws unless the author credit is byte-for-byte intact.
- * Called at module load from every entry point and on every App render, so the
- * app cannot boot or draw without the credit in place.
+ * Throws unless the author credit is byte-for-byte intact, otherwise returns a
+ * token the app is structurally required to consume. Called at module load from
+ * every entry point, so the app cannot boot or draw without the credit.
+ *
+ * - Delete this file        -> nothing resolves `../credit` -> build fails.
+ * - Change a credit value   -> the seal mismatches -> throws.
+ * - Delete the call below   -> `CREDIT` is undefined -> the build (or load) fails.
  */
-export function verifyCredit(): void {
-  if (seal(CREDIT_BLOB) !== _EXPECTED) {
+export function verifyCredit(): CreditToken {
+  const computed = seal(CREDIT_BLOB);
+  if (computed !== _EXPECTED) {
     throw new Error(
       'Catch the Coin: author credit was removed or altered. ' +
         'This build is not authorised to run.',
     );
   }
+  return { ok: true, seal: computed };
 }
